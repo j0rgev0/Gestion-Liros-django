@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Autores</title>
+    
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <style>
+            * {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+<body>
+
+    <header class="bg-fuchsia-600 text-white py-4 flex flex-col items-center rounded-b-[20px]">
+        
+        <h1 class="text-4xl font-bold flex-col justify-center">Gestion de Libros</h1>
+        <nav class="w-full pl-10 font-bold"> 
+            <a href="{% url 'index' %}">Inicio</a>
+            <a href="{% url 'lista_autores' %}" class=" pl-5">Autores</a>
+            <a href="{% url 'lista_libros' %}" class=" pl-5">Libros</a> 
+        </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md capitalize">
+
+        <h1 class="text-2xl font-semibold mb-4">{{ object.nombre }} {{ object.apellido }}</h1>
+        <p class="text-lg mb-4">Fecha de nacimiento: <span class="font-medium">{{ object.fecha_nacimiento }}</span></p>
+        
+        <h2 class="text-xl font-bold mb-3">Libros de este autor:</h2>
+        <ul class="list-disc pl-6">
+            {% for libro in object.libro_set.all %}
+            <li class="mb-2">
+                <a href="{% url 'detalle_libro' libro.id %}" class="text-blue-600 hover:underline">{{ libro.titulo }}</a>
+            </li>
+            {% empty %}
+            <p class="text-gray-600">Este autor aún no tiene libros registrados.</p>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

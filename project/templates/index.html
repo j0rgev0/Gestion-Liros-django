@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Web</title>
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bg-fuchsia-600 text-white py-4 flex flex-col items-center rounded-b-[20px]">
+        
+        <h1 class="text-4xl font-bold flex-col justify-center">Gestion de Libros</h1>
+        <nav class="w-full pl-10 font-bold "> 
+            <a href="{% url 'index' %}">Inicio</a>
+            <a href="{% url 'lista_autores' %}" class=" pl-5">Autores</a>
+            <a href="{% url 'lista_libros' %}" class=" pl-5">Libros</a> 
+        </nav>
+    </header>
+
+    <main class="w-screen text-center">
+        
+
+    </main>
+</body>
+
+</html>
