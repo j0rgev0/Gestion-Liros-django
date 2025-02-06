@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Autores - Gestión de Libros{% endblock %}
+{% block title %}Autores{% endblock %}
 
 {% block content %}
     <h3 class="text-2xl font-bold mb-4">Autores:</h3>
@@ -15,4 +15,11 @@
         <p>No hay autores disponibles.</p>
         {% endfor %}
     </ul>
+{% endblock %}
+
+{% block actions %}
+<div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg flex flex-col items-center">
+    <a href="{% url 'add_autor' %}" class="bg-green-600 p-3 text-white rounded-[10px] hover:bg-green-500">Añadir Libros</a>
+</div>
+
 {% endblock %}

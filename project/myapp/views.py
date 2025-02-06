@@ -1,5 +1,5 @@
 
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView , CreateView
 from .models import Libro, Autor
 
 class PaginaPrincipalView(TemplateView):
@@ -22,3 +22,10 @@ class LibroDetailView(DetailView):
     model = Libro
     template_name = 'detalle_libro.html'
     context_object_name = 'libro'
+    
+class AutorCreateView(CreateView):
+    model = Autor
+    template_name = 'add_autor.html'
+    fields = ['nombre', 'apellido', 'fecha_nacimiento']
+
+    

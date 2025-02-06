@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Inicio - Gestión de Libros{% endblock %}
+
+{% block content %}
+
+    <h2 class="text-2xl font-bold mb-4">Añadir un Nuevo Autor</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+
+        <label class="block text-gray-700 text-sm font-bold mb-2">Nombre:
+        <input type="text" name="nombre" class="form-input border rounded px-2 py-1"></label>
+
+        <label class="block text-gray-700 text-sm font-bold mb-2">Apellido:
+        <input type="text" name="apellido" class="form-input border rounded px-2 py-1"></label>
+        
+        <label class="block text-gray-700 text-sm font-bold mb-2">Fecha de Nacimiento:
+        <input type="date" name="fecha_nacimiento" class="form-input border rounded px-2 py-1"></label>
+
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-3">Guardar</button>
+        <a href="{% url 'lista_autores' %}" class="ml-4 text-blue-500">Cancelar</a>
+    </form>
+
+{% endblock %}
