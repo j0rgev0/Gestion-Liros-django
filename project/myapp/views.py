@@ -1,4 +1,5 @@
 
+from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView , CreateView
 from .models import Libro, Autor
 
@@ -27,5 +28,7 @@ class AutorCreateView(CreateView):
     model = Autor
     template_name = 'add_autor.html'
     fields = ['nombre', 'apellido', 'fecha_nacimiento']
+    success_url = reverse_lazy('lista_autores')
+    
 
     

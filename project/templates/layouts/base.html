@@ -17,7 +17,7 @@
     </style>
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
     <header class="bg-fuchsia-600 text-white py-4 flex flex-col items-center rounded-b-[20px]">
         <h1 class="text-4xl font-bold">Gestión de Libros</h1>
         <nav class="w-full pl-10 font-bold">
@@ -27,14 +27,18 @@
         </nav>
     </header>
 
-    <main class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-        {% block content %}
-        {% endblock %}
+    <main class=" flex-1">
+        
+        <div  class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div>
+            
+            {% block actions %}
+            {% endblock %}
+        </div>
     </main>
-
-    {% block actions %}
-    {% endblock %}
-
     <footer class="bg-fuchsia-600 text-white text-center py-4 mt-10">
         © 2025 Gestión de Libros - Todos los derechos reservados.
     </footer>

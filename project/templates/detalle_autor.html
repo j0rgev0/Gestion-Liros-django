@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Autores - Gestión de Libros{% endblock %}
+{% block title %}{{ object.nombre }} {{ object.apellido }}{% endblock %}
 
 {% block content %}
 <h1 class="text-2xl font-semibold mb-4 capitalize">{{ object.nombre }} {{ object.apellido }}</h1>
