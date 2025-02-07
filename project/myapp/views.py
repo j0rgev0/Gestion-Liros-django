@@ -1,6 +1,6 @@
 
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView , CreateView
+from django.views.generic import TemplateView, ListView, DetailView , CreateView , UpdateView , DeleteView
 from .models import Libro, Autor
 
 class PaginaPrincipalView(TemplateView):
@@ -30,5 +30,16 @@ class AutorCreateView(CreateView):
     fields = ['nombre', 'apellido', 'fecha_nacimiento']
     success_url = reverse_lazy('lista_autores')
     
+class AutorUpdateView(UpdateView):
+    model = Autor
+    fields = ['nombre', 'apellido', 'fecha_nacimiento']
+    template_name = 'edit_autor.html'
+    success_url = reverse_lazy('lista_autores')
+    
+
+class AutorDeleteView(DeleteView):
+    model = Autor
+    template_name = 'delete_autor.html'
+    success_url = reverse_lazy('lista_autores')
 
     
