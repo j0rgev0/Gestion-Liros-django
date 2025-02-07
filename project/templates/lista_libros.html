@@ -16,4 +16,9 @@
     <p class="text-gray-600">No hay libros disponibles en este momento.</p>
     {% endfor %}
 </ul>
-{% endblock %}  
+{% endblock %}
+{% block actions %}
+<div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg flex flex-col items-center">
+    <a href="{% url 'add_book' %}" class="bg-green-600 p-3 text-white rounded-[10px] hover:bg-green-500">Añadir Libro</a>
+</div>
+{% endblock %}

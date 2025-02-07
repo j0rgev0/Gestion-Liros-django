@@ -30,6 +30,17 @@ class AutorCreateView(CreateView):
     fields = ['nombre', 'apellido', 'fecha_nacimiento']
     success_url = reverse_lazy('lista_autores')
     
+class BookCreateView(CreateView):
+    model = Libro
+    template_name = 'add_book.html'
+    fields = ['titulo', 'fecha_publi', 'genero', 'isbn','autor']
+    success_url = reverse_lazy('lista_libros')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["autores"] = Autor.objects.all()
+        return context
+    
 class AutorUpdateView(UpdateView):
     model = Autor
     fields = ['nombre', 'apellido', 'fecha_nacimiento']

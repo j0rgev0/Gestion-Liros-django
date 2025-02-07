@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Añadir Libro{% endblock %}
+
+{% block content %}
+
+    <h2 class="text-2xl font-bold mb-4">Añadir un Nuevo Libro</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+
+        <label class="block text-gray-700 text-sm font-bold mb-2">Nombre:
+        <input type="text" name="titulo" class="form-input border rounded px-2 py-1"></label>
+        
+        <label class="block text-gray-700 text-sm font-bold mb-2">Fecha de Lanzamiento:
+        <input type="date" name="fecha_publi" class="form-input border rounded px-2 py-1"></label>
+
+        <label class="block text-gray-700 text-sm font-bold mb-2">Genero:
+        <input type="text" name="genero" class="form-input border rounded px-2 py-1"></label>
+
+        <label class="block text-gray-700 text-sm font-bold mb-2">ISBN:
+        <input type="number" name="isbn" class="form-input border rounded px-2 py-1"></label>
+
+        <label class="block text-gray-700 text-sm font-bold mb-2">Autor:
+        <select name="autor">
+            <option value="">...</option>
+            {% for autor in autores %}
+            <option value="{{ autor.id }}" class="capitalize">{{ autor.nombre }} {{ autor.apellido }}</option>
+            {% endfor %}
+        </select></label>
+        
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-3">Guardar</button>
+        <a href="{% url 'lista_libros' %}" class="ml-4 text-blue-500">Cancelar</a>
+    </form>
+{% endblock %}
