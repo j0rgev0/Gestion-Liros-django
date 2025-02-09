@@ -1,36 +1,36 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Añadir Libro{% endblock %}
+{% block title %}Editar Libro{% endblock %}
 
 {% block content %}
 
-    <h2 class="text-2xl font-bold mb-4">Añadir un Nuevo Libro</h2>
+    <h2 class="text-2xl font-bold mb-4">Editar un Libro</h2>
     
     <form method="post">
         {% csrf_token %}
 
         <label class="block text-gray-700 text-sm font-bold mb-2">Nombre:
-        <input type="text" name="titulo" class="form-input border rounded px-2 py-1"></label>
+        <input type="text" name="titulo" value="{{libro.titulo}}" class="form-input border rounded px-2 py-1"></label>
         
         <label class="block text-gray-700 text-sm font-bold mb-2">Fecha de Lanzamiento:
-        <input type="date" name="fecha_publi" class="form-input border rounded px-2 py-1"></label>
+        <input type="date" name="fecha_publi" value="{{ libro.fecha_publi | date:'Y-m-d'}}" class="form-input border rounded px-2 py-1"></label>
 
         <label class="block text-gray-700 text-sm font-bold mb-2">Genero:
-        <input type="text" name="genero" class="form-input border rounded px-2 py-1"></label>
+        <input type="text" name="genero" value="{{libro.genero}}" class="form-input border rounded px-2 py-1"></label>
 
         <label class="block text-gray-700 text-sm font-bold mb-2">ISBN:
-        <input type="number" name="isbn" class="form-input border rounded px-2 py-1"></label>
+        <input type="number" name="isbn" value="{{libro.isbn}}" class="form-input border rounded px-2 py-1"></label>
 
         <label class="block text-gray-700 text-sm font-bold mb-2">Autor:
-        <select name="autor">
-            <option value="">...</option>
+        <select name="autor" value="{{libro.autor}}">
+            <option value="{{autor.id}}">...</option>
             {% for autor in autores %}
             <option value="{{ autor.id }}" class="capitalize">{{ autor.nombre }} {{ autor.apellido }}</option>
             {% endfor %}
         </select></label>
         
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-3">Guardar</button>
-        <a href="{% url 'lista_libros' %}" class="ml-4 text-blue-500">Cancelar</a>
+        <a href="{% url 'detalle_libro' libro.id %}" class="ml-4 text-blue-500">Cancelar</a>
     </form>
 <br>
     {% if messages %}

@@ -1,4 +1,5 @@
 
+from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView , CreateView , UpdateView , DeleteView
 from .models import Libro, Autor
@@ -41,6 +42,10 @@ class BookCreateView(CreateView):
         context["autores"] = Autor.objects.all()
         return context
     
+    def form_invalid(self,form):
+        messages.error(self.request, "Error al añadir el libro. Revisa los campos ❌")
+        return self.render_to_response(self.get_context_data(form=form))
+    
 class AutorUpdateView(UpdateView):
     model = Autor
     fields = ['nombre', 'apellido', 'fecha_nacimiento']
@@ -53,4 +58,23 @@ class AutorDeleteView(DeleteView):
     template_name = 'delete_autor.html'
     success_url = reverse_lazy('lista_autores')
 
+class BookUpdateView(UpdateView):
+    model = Libro
+    template_name = 'edit_book.html'
+    fields = ['titulo', 'fecha_publi', 'genero', 'isbn','autor']
+    success_url = reverse_lazy('lista_libros')
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["autores"] = Autor.objects.all()
+        return context
+    
+    def form_invalid(self,form):
+        messages.error(self.request, "Error al añadir el libro. Revisa los campos ❌")
+        return self.render_to_response(self.get_context_data(form=form))
+    
+    
+class BookDeleteView(DeleteView):
+    model = Libro
+    template_name = 'delete_book.html'
+    success_url = reverse_lazy('lista_libros')

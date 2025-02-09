@@ -21,9 +21,8 @@
 {% block actions %}
 <div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg flex flex-col items-center">
     <div class="flex gap-4 justify-center">
-        <a href="{% url 'edit_autor' object.id %}" class="bg-green-600 p-3 text-white rounded-[10px] hover:bg-green-500">Editar Autor</a>
-        <a href="{% url 'delete_autor' object.id  %}" class="bg-red-600 p-3 text-white rounded-[10px] hover:bg-red-500">Eliminar Autor</a>
+        <a href="{% url 'edit_book' object.id %}" class="bg-green-600 p-3 text-white rounded-[10px] hover:bg-green-500">Editar Libro</a>
+        <a href="{% url 'delete_book' object.id  %}" class="bg-red-600 p-3 text-white rounded-[10px] hover:bg-red-500">Eliminar Libro</a>
     </div>
 </div>
-
 {% endblock%}
