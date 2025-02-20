@@ -1,8 +1,26 @@
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView , CreateView , UpdateView , DeleteView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
 from .models import Libro, Autor
+
+
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'
+    redirect_authenticated_user = True  # Redirige si ya está autenticado
+    success_url = reverse_lazy('index')
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Registro exitoso. Ahora puedes iniciar sesión ✅")
+        return response
 
 class PaginaPrincipalView(TemplateView):
     template_name = 'index.html'
@@ -24,57 +42,69 @@ class LibroDetailView(DetailView):
     model = Libro
     template_name = 'detalle_libro.html'
     context_object_name = 'libro'
-    
-class AutorCreateView(CreateView):
+
+class AutorCreateView(LoginRequiredMixin, CreateView):
     model = Autor
     template_name = 'add_autor.html'
     fields = ['nombre', 'apellido', 'fecha_nacimiento']
     success_url = reverse_lazy('lista_autores')
-    
-class BookCreateView(CreateView):
+
+    def form_valid(self, form):
+        messages.success(self.request, "Autor añadido correctamente ✅")
+        return super().form_valid(form)
+
+class LibroCreateView(LoginRequiredMixin, CreateView):
     model = Libro
     template_name = 'add_book.html'
-    fields = ['titulo', 'fecha_publi', 'genero', 'isbn','autor']
+    fields = ['titulo', 'fecha_publi', 'genero', 'isbn', 'autor']
     success_url = reverse_lazy('lista_libros')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["autores"] = Autor.objects.all()
-        return context
-    
-    def form_invalid(self,form):
-        messages.error(self.request, "Error al añadir el libro. Revisa los campos ❌")
+
+    def form_valid(self, form):
+        messages.success(self.request, "Libro añadido correctamente ✅")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Error al añadir el libro ❌")
         return self.render_to_response(self.get_context_data(form=form))
-    
-class AutorUpdateView(UpdateView):
+
+class AutorUpdateView(LoginRequiredMixin, UpdateView):
     model = Autor
     fields = ['nombre', 'apellido', 'fecha_nacimiento']
     template_name = 'edit_autor.html'
     success_url = reverse_lazy('lista_autores')
-    
 
-class AutorDeleteView(DeleteView):
+    def form_valid(self, form):
+        messages.success(self.request, "Autor actualizado correctamente ✅")
+        return super().form_valid(form)
+
+class LibroUpdateView(LoginRequiredMixin, UpdateView):
+    model = Libro
+    template_name = 'edit_book.html'
+    fields = ['titulo', 'fecha_publi', 'genero', 'isbn', 'autor']
+    success_url = reverse_lazy('lista_libros')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Libro actualizado correctamente ✅")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Error al actualizar el libro ❌")
+        return self.render_to_response(self.get_context_data(form=form))
+
+class AutorDeleteView(LoginRequiredMixin, DeleteView):
     model = Autor
     template_name = 'delete_autor.html'
     success_url = reverse_lazy('lista_autores')
 
-class BookUpdateView(UpdateView):
-    model = Libro
-    template_name = 'edit_book.html'
-    fields = ['titulo', 'fecha_publi', 'genero', 'isbn','autor']
-    success_url = reverse_lazy('lista_libros')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["autores"] = Autor.objects.all()
-        return context
-    
-    def form_invalid(self,form):
-        messages.error(self.request, "Error al añadir el libro. Revisa los campos ❌")
-        return self.render_to_response(self.get_context_data(form=form))
-    
-    
-class BookDeleteView(DeleteView):
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Autor eliminado correctamente ✅")
+        return super().delete(request, *args, **kwargs)
+
+class LibroDeleteView(LoginRequiredMixin, DeleteView):
     model = Libro
     template_name = 'delete_book.html'
     success_url = reverse_lazy('lista_libros')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Libro eliminado correctamente ✅")
+        return super().delete(request, *args, **kwargs)

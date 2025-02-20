@@ -55,9 +55,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware', 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+LOGIN_URL = 'login'  # URL a la que se redirige si el usuario no está autenticado
+LOGIN_REDIRECT_URL = 'index'  # URL a la que se redirige después de iniciar sesión
+LOGOUT_REDIRECT_URL = 'login'  # URL a la que se redirige después de cerrar sesión
 
 ROOT_URLCONF = 'project.urls'
 

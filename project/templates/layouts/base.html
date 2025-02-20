@@ -18,27 +18,40 @@
 </head>
 
 <body class="min-h-screen flex flex-col">
-    <header class="bg-fuchsia-600 text-white py-4 flex flex-col items-center rounded-b-[20px]">
-        <h1 class="text-4xl font-bold">Gestión de Libros</h1>
-        <nav class="w-full pl-10 font-bold">
-            <a href="{% url 'index' %}" class="pr-5">Inicio</a>
-            <a href="{% url 'lista_autores' %}" class="pr-5">Autores</a>
-            <a href="{% url 'lista_libros' %}" class="pr-5">Libros</a>
+    <header class="bg-fuchsia-600 text-white py-4 px-10 flex justify-between items-center rounded-b-[20px]">
+        <nav class="flex space-x-5 font-bold">
+            <a href="{% url 'index' %}" class="hover:underline">Inicio</a>
+            <a href="{% url 'lista_autores' %}" class="hover:underline">Autores</a>
+            <a href="{% url 'lista_libros' %}" class="hover:underline">Libros</a>
         </nav>
+
+        <h1 class="text-4xl font-bold text-center flex-1">Gestión de Libros</h1>
+
+        <div class="flex items-center space-x-4">
+            {% if user.is_authenticated %}
+                <span class="font-semibold">Bienvenido, {{ user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="hover:underline">Cerrar sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="hover:underline">Iniciar sesión</a>
+                <a href="{% url 'signup' %}" class="hover:underline">Registrarse</a>
+            {% endif %}
+        </div>
     </header>
 
-    <main class=" flex-1">
-        
-        <div  class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+    <main class="flex-1">
+        <div class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
             {% block content %}
             {% endblock %}
         </div>
         <div>
-            
             {% block actions %}
             {% endblock %}
         </div>
     </main>
+
     <footer class="bg-fuchsia-600 text-white text-center py-4 mt-10">
         © 2025 Gestión de Libros - Todos los derechos reservados.
     </footer>
