@@ -5,6 +5,11 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from .models import Libro, Autor
+from .serializers import AutorSerializer, LibroSerializer
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 class CustomLoginView(LoginView):
@@ -108,3 +113,14 @@ class LibroDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "Libro eliminado correctamente ✅")
         return super().delete(request, *args, **kwargs)
+
+
+class AutorViewSet(viewsets.ModelViewSet):
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class LibroViewSet(viewsets.ModelViewSet):
+    queryset = Libro.objects.all()
+    serializer_class = LibroSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]

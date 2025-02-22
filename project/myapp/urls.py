@@ -1,6 +1,13 @@
-from django.contrib import admin
+from rest_framework.routers import DefaultRouter
+from .views import AutorViewSet, LibroViewSet
 from django.urls import path, include
+from django.contrib import admin
 from myapp import views
+
+
+router = DefaultRouter()
+router.register(r'autores', AutorViewSet)
+router.register(r'libros', LibroViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +33,6 @@ urlpatterns = [
     path('accounts/login/', views.CustomLoginView.as_view(), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', views.SignUpView.as_view(), name='signup'),
+    #api
+     path('api/', include(router.urls)),
 ]
